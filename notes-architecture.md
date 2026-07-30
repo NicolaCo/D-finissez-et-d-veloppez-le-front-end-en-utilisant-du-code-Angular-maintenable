@@ -9,6 +9,7 @@
 # Proposition de nouvelle architecture
 On veut garder une architecture simple tout en permettant la réutilisation de composants communs. De plus, on veut mettre la structure des données dans le dossier models. Et l'accès aux données via un service que l'on met dans le dossier service.
 
+```
 src/app/
     ├── app.component.spec.ts
     ├── app.component.ts
@@ -47,4 +48,4 @@ assets/
 ├── polyfills.ts
 ├── styles.scss
 └── test.ts
-
+```
