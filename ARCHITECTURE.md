@@ -29,7 +29,7 @@ src/                         # Folder containing the application's source code.
       countrycard/           # line chart per country.
       medal-chart-component/ # pie chart per country, navigates to 'country/:countryName' on click.
     models/                  # Application models: Olympic, Participation.
-    services/                # DataService: loadOlympics() via HttpClient from the data source.
+    services/                # DataService: load datas via HttpClient from the data source.
   assets/mock/               # Static data source (temporary).
   environnement/             # Configuration depending on the environment.
 ```
