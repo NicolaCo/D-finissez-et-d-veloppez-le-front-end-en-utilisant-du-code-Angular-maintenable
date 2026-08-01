@@ -33,7 +33,12 @@ export class CountryComponent implements OnInit {
   ngOnInit(): void {
     this.readCountryFromParam();
     this.dataService.loadOlympics().subscribe(data => {
-      this.countryParticipations = this.selectCountryParticipations(data)
+      const olympicCountry = data.find((i: Olympic) => i.country === this.countryName);
+      if (!olympicCountry) {
+        this.router.navigate(['/not-found']);
+        return;
+      }
+      this.countryParticipations = olympicCountry.participations;
       this.years = this.selectYears()
       this.medals = this.selectMedals()
       this.indicators.push({ label: "Number of entries", value: this.calculateNumberOfEntries()})
@@ -46,11 +51,6 @@ export class CountryComponent implements OnInit {
     let countryName: string | null = null;
     this.route.paramMap.subscribe((param: ParamMap) => countryName = param.get('countryName'));
     this.countryName = countryName ? countryName : '';
-  }
-
-  selectCountryParticipations(datas: Olympic[]): Participation[]{
-    const olympicCountry: Olympic | undefined = datas.find((i: Olympic) => i.country === this.countryName);
-    return olympicCountry ? olympicCountry.participations : [];
   }
 
   selectYears(): number[]{
