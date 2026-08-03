@@ -50,7 +50,7 @@ export class CountryComponent implements OnInit {
 
   readCountryFromParam(): void{
     let countryName: string | null = null;
-    this.route.paramMap.subscribe((param: ParamMap) => countryName = param.get('countryName'));
+    this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((param: ParamMap) => countryName = param.get('countryName'));
     this.countryName = countryName ? countryName : '';
   }
 
