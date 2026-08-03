@@ -4,6 +4,7 @@ import { CountrycardComponent } from 'src/app/components/countrycard/countrycard
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
 import { DataService } from 'src/app/services/data.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class CountryComponent implements OnInit {
 
   ngOnInit(): void {
     this.readCountryFromParam();
-    this.dataService.loadOlympics().subscribe(data => {
+    this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
       const olympicCountry = data.find((i: Olympic) => i.country === this.countryName);
       if (!olympicCountry) {
         this.router.navigate(['/not-found']);
