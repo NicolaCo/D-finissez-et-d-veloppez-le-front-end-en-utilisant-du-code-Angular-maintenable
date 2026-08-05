@@ -15,7 +15,7 @@ export class MedalChartComponentComponent implements OnChanges {
   @Input() countries!: string[];
   @Input() sumOfAllMedalsYears!: number[];
 
-  public pieChart!: Chart<"pie", number[], string>;
+  public pieChart!: Chart<'pie', number[], string>;
 
   constructor(private router: Router) { }
   
@@ -34,7 +34,7 @@ export class MedalChartComponentComponent implements OnChanges {
       return;
     }
     
-    this.pieChart = new Chart("DashboardPieChart", {
+    this.pieChart = new Chart('DashboardPieChart', {
       type: 'pie',
       data: {
         labels: countries,

@@ -4,7 +4,7 @@ import { CountrycardComponent } from 'src/app/components/countrycard/countrycard
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
 import { DataService } from 'src/app/services/data.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+// import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -33,7 +33,8 @@ export class CountryComponent implements OnInit {
 
   ngOnInit(): void {
     this.readCountryFromParam();
-    this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
+    // this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
+    this.dataService.loadOlympics().subscribe(data => {
       const olympicCountry = data.find((i: Olympic) => i.country === this.countryName);
       if (!olympicCountry) {
         this.router.navigate(['/not-found']);
@@ -42,15 +43,16 @@ export class CountryComponent implements OnInit {
       this.countryParticipations = olympicCountry.participations;
       this.years = this.selectYears()
       this.medals = this.selectMedals()
-      this.indicators.push({ label: "Number of entries", value: this.calculateNumberOfEntries()})
-      this.indicators.push({ label: "Total number medals", value: this.calculateTotalNumberOfMedals()})
-      this.indicators.push({ label: "Total number of athletes", value: this.calculateTotalNumberOfAthletes()})
+      this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries()})
+      this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals()})
+      this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes()})
     });    
   }
 
   readCountryFromParam(): void{
     let countryName: string | null = null;
-    this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((param: ParamMap) => countryName = param.get('countryName'));
+    this.route.paramMap.subscribe((param: ParamMap) => countryName = param.get('countryName'));
+    // this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((param: ParamMap) => countryName = param.get('countryName'));
     this.countryName = countryName ? countryName : '';
   }
 

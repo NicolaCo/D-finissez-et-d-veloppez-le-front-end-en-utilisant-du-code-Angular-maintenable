@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
-import { CountryComponent } from "./country.component";
+import { CountryComponent } from './country.component';
 
 describe('DetailComponent', () => {
   let component: CountryComponent;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Olympic } from "../models/olympic.model";
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { Olympic } from '../models/olympic.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 
 @Injectable({

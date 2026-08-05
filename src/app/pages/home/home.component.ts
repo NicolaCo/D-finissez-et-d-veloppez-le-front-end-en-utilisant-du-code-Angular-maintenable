@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { HeaderComponent, Indicator } from '../../components/header/header.component';
 import { MedalChartComponentComponent } from '../../components/medal-chart-component/medal-chart-component.component';
 import { DataService } from 'src/app/services/data.service';
@@ -16,7 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class HomeComponent implements OnInit {
 
-  public titlePage: string = "Medals per Country";
+  public titlePage: string = 'Medals per Country';
 
   public indicators: Indicator[] = [];
   
@@ -28,15 +28,16 @@ export class HomeComponent implements OnInit {
 
   
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void{
-    this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
+    // this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
+    this.dataService.loadOlympics().subscribe(data => {
       this.datas = data
       this.countries = this.extractCountries();
       this.sumOfAllMedalsYears = this.extractSumOfAllMedalsYears();
-      this.indicators.push({ label :"Number of countries", value: this.countries.length});
-      this.indicators.push({ label:"Number of JOs", value: this.calculateTotalJOs() });
+      this.indicators.push({ label :'Number of countries', value: this.countries.length});
+      this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
     });
   } 
 
@@ -52,7 +53,7 @@ export class HomeComponent implements OnInit {
   extractSumOfAllMedalsYears() {
     return this.datas.map((olympic: Olympic) => olympic.participations
       .map((participation: Participation) => (participation.medalsCount)))
-      .map((i: number[]) => i.reduce((acc: number, i: number) => acc + i, 0));
+      .map((i: number[]) => i.reduce((acc: number, j: number) => acc + j, 0));
   }
 
 }

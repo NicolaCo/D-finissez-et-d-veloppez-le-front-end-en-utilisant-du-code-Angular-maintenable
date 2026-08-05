@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 
 
@@ -15,10 +14,10 @@ export class CountrycardComponent implements OnInit, OnChanges{
   @Input() years: number[] = [];
   @Input() medals: string[] = [];
 
-  public lineChart!: Chart<"line", string[], number>;
+  public lineChart!: Chart<'line', string[], number>;
   
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     this.buildChart(this.years, this.medals);
@@ -32,13 +31,13 @@ export class CountrycardComponent implements OnInit, OnChanges{
   }
 
   buildChart(years: number[], medals: string[]) {
-      const lineChart = new Chart("countryChart", {
+      const lineChart = new Chart('countryChart', {
         type: 'line',
         data: {
           labels: years,
           datasets: [
             {
-              label: "medals",
+              label: 'medals',
               data: medals,
               backgroundColor: '#0b868f'
             },
