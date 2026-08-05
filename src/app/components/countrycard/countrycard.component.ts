@@ -12,9 +12,9 @@ import Chart from 'chart.js/auto';
 export class CountrycardComponent implements OnInit, OnChanges{
 
   @Input() years: number[] = [];
-  @Input() medals: string[] = [];
+  @Input() medals: number[] = [];
 
-  public lineChart!: Chart<'line', string[], number>;
+  public lineChart!: Chart<'line', number[], number>;
   
 
   constructor() { }
@@ -30,7 +30,7 @@ export class CountrycardComponent implements OnInit, OnChanges{
     }    
   }
 
-  buildChart(years: number[], medals: string[]) {
+  buildChart(years: number[], medals: number[]) {
       const lineChart = new Chart('countryChart', {
         type: 'line',
         data: {

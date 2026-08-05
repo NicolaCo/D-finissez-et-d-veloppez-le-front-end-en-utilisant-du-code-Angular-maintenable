@@ -25,7 +25,7 @@ export class CountryComponent implements OnInit {
 
   public years: number[] = [];
 
-  public medals: string[] = [];
+  public medals: number[] = [];
 
 
   constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {
@@ -60,23 +60,20 @@ export class CountryComponent implements OnInit {
     return this.countryParticipations.map((i: Participation) => i.year) ?? [];
   }
 
-  selectMedals(): string[]{
-    return this.countryParticipations.map((i: Participation) => i.medalsCount.toString()) ?? [];
+  selectMedals(): number[]{
+    return this.countryParticipations.map((i: Participation) => i.medalsCount);
   }
 
   calculateNumberOfEntries(): number{
-    const participations = this.countryParticipations.map((i: Participation) => i);
-    return participations?.length ?? 0;
+    return this.countryParticipations.length;
   }
 
   calculateTotalNumberOfMedals(): number {
-    const totalMedals = this.countryParticipations.map((i: Participation) => i.medalsCount.toString()) ?? [];
-    return totalMedals.reduce((accumulator: number, item: string) => accumulator + parseInt(item), 0);
+    return this.countryParticipations.reduce((acc: number, i: Participation) => acc + i.medalsCount, 0 );
   }
 
   calculateTotalNumberOfAthletes(): number {
-    const nbAthletes: string[] = this.countryParticipations.map((i: Participation) => i.athleteCount.toString()) ?? []
-    return nbAthletes.reduce((accumulator: number, item: string) => accumulator + parseInt(item), 0);
+    return this.countryParticipations.reduce((acc: number, i:Participation) => acc + i.athleteCount, 0);
   }
 
 }
