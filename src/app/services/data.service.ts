@@ -12,11 +12,17 @@ export type LoadOlympicsByIdResult =
   | { kind: 'not-found' }
   | { kind: 'error'; status: number; message: string };
 
+export type CountryNameIdResult =
+  | { kind: 'success'; name: string; id: number }
+  | { kind: 'not-found' }
+  | { kind: 'error'; status: number; message: string };
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class DataService {
+ 
   private olympicUrl: string = './assets/mock/olympic.json';
 
   constructor(private http: HttpClient){
@@ -32,15 +38,43 @@ export class DataService {
     );
   }
 
-  loadOlympicsByName(name: string): Observable<LoadOlympicsByIdResult> {
+  loadOlympicsById(id: number): Observable<LoadOlympicsByIdResult> {
     return this.loadOlympics().pipe(
       map((result) => {
         if (result.kind === 'error') {
           return { kind: 'error', status: result.status, message: result.message };
         }
-        const olympic = result.data.find((o: Olympic) => o.country === name);
+        const olympic = result.data.find((o: Olympic) => o.id === id);
         return olympic
           ? { kind: 'success', data: olympic }
+          : { kind: 'not-found' };
+      })
+    );
+  }
+
+  getCountryNameFromId(countryId: number): Observable<CountryNameIdResult> {
+    return this.loadOlympics().pipe(
+      map((result) => {
+        if (result.kind === 'error') {
+          return { kind: 'error', status: result.status, message: result.message };
+        }
+        const olympic = result.data.find((o: Olympic) => o.id === countryId);
+        return olympic
+          ? { kind: 'success', name: olympic.country, id:olympic.id }
+          : { kind: 'not-found' };
+      })
+    );
+  }
+
+    getCountryIdFromName(countryName: string): Observable<CountryNameIdResult> {
+    return this.loadOlympics().pipe(
+      map((result) => {
+        if (result.kind === 'error') {
+          return { kind: 'error', status: result.status, message: result.message };
+        }
+        const olympic = result.data.find((o: Olympic) => o.country === countryName);
+        return olympic
+          ? { kind: 'success', name: olympic.country, id:olympic.id }
           : { kind: 'not-found' };
       })
     );

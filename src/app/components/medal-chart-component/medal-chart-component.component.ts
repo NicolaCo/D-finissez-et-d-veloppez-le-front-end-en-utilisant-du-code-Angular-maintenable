@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
+import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -16,8 +17,9 @@ export class MedalChartComponentComponent implements OnChanges {
   @Input() sumOfAllMedalsYears!: number[];
 
   public pieChart!: Chart<'pie', number[], string>;
+  public error!: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dataService: DataService) { }
   
 
   ngOnChanges(): void{
@@ -53,7 +55,18 @@ export class MedalChartComponentComponent implements OnChanges {
             if (points.length) {
               const firstPoint = points[0];
               const countryName = this.pieChart.data.labels ? this.pieChart.data.labels[firstPoint.index] : '';
-              this.router.navigate(['country', countryName]);
+              this.dataService.getCountryIdFromName(countryName).subscribe(data => {
+                if(data.kind === 'success') {
+                  this.router.navigate(['country', data.id]);
+                  return;
+                } else if (data.kind === 'not-found') {
+                  this.router.navigate(['not-found']);
+                  return;
+                } else {
+                  this.error = data.message;
+                  return;
+                }
+              });
             }
           }
         }
