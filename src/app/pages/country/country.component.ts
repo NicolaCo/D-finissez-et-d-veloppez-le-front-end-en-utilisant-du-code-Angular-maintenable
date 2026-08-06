@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router, RouterLink} from '@angular/router';
 import { CountrycardComponent } from 'src/app/components/countrycard/countrycard.component';
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
-import { Olympic, Participation } from 'src/app/models/olympic.model';
+import { Participation } from 'src/app/models/olympic.model';
 import { DataService } from 'src/app/services/data.service';
-// import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -18,6 +17,8 @@ import { DataService } from 'src/app/services/data.service';
 export class CountryComponent implements OnInit {
 
   public countryName: string = '';
+
+  public error: string | null = null;
 
   public indicators: Indicator[] = [];
 
@@ -33,26 +34,26 @@ export class CountryComponent implements OnInit {
 
   ngOnInit(): void {
     this.readCountryFromParam();
-    // this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
-    this.dataService.loadOlympics().subscribe(data => {
-      const olympicCountry = data.find((i: Olympic) => i.country === this.countryName);
-      if (!olympicCountry) {
-        this.router.navigate(['/not-found']);
-        return;
-      }
-      this.countryParticipations = olympicCountry.participations;
-      this.years = this.selectYears()
-      this.medals = this.selectMedals()
-      this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries()})
-      this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals()})
-      this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes()})
-    });    
+    this.dataService.loadOlympicsByName(this.countryName).subscribe(
+      result => {
+        if(result.kind === 'success') {
+          this.countryParticipations = result.data.participations
+          this.years = this.selectYears()
+          this.medals = this.selectMedals()
+          this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries()})
+          this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals()})
+          this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes()})
+        } else if (result.kind === 'not-found') {
+          this.router.navigate(['/not-found']);
+        } else {
+          this.error = result.message
+        }
+      });    
   }
 
   readCountryFromParam(): void{
     let countryName: string | null = null;
     this.route.paramMap.subscribe((param: ParamMap) => countryName = param.get('countryName'));
-    // this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((param: ParamMap) => countryName = param.get('countryName'));
     this.countryName = countryName ? countryName : '';
   }
 

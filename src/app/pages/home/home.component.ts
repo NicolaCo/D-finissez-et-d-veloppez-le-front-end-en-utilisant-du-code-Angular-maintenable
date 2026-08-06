@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent, Indicator } from '../../components/header/header.component';
 import { MedalChartComponentComponent } from '../../components/medal-chart-component/medal-chart-component.component';
 import { DataService } from 'src/app/services/data.service';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +15,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class HomeComponent implements OnInit {
 
   public titlePage: string = 'Medals per Country';
+
+  public error: string | null = null;
 
   public indicators: Indicator[] = [];
   
@@ -31,15 +31,18 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void{
-    // this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(data => {
-    this.dataService.loadOlympics().subscribe(data => {
-      this.datas = data
-      this.countries = this.extractCountries();
-      this.sumOfAllMedalsYears = this.extractSumOfAllMedalsYears();
-      this.indicators.push({ label :'Number of countries', value: this.countries.length});
-      this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
+    this.dataService.loadOlympics().subscribe(result => {
+      if (result.kind === 'success') {
+        this.datas = result.data;
+        this.countries = this.extractCountries();
+        this.sumOfAllMedalsYears = this.extractSumOfAllMedalsYears();
+        this.indicators.push({ label :'Number of countries', value: this.countries.length});
+        this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
+      } else {
+        this.error = result.message;
+      }
     });
-  } 
+  }
 
   calculateTotalJOs(): number {
     const years = this.datas.flatMap((i: Olympic) => i.participations.map((f: Participation) => f.year));
