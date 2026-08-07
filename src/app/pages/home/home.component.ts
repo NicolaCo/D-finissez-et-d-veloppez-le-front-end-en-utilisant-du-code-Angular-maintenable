@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent, Indicator } from '../../components/header/header.component';
-import { MedalChartComponentComponent } from '../../components/medal-chart-component/medal-chart-component.component';
+import { MedalChartComponent } from '../../components/medal-chart/medal-chart.component';
 import { DataService } from 'src/app/services/data.service';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, MedalChartComponentComponent],
+  imports: [HeaderComponent, MedalChartComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

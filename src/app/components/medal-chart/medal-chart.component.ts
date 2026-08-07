@@ -8,10 +8,10 @@ import { DataService } from 'src/app/services/data.service';
   selector: 'app-medal-chart-component',
   standalone: true,
   imports: [],
-  templateUrl: './medal-chart-component.component.html',
-  styleUrl: './medal-chart-component.component.scss'
+  templateUrl: './medal-chart.component.html',
+  styleUrl: './medal-chart.component.scss'
 })
-export class MedalChartComponentComponent implements OnChanges {
+export class MedalChartComponent implements OnChanges {
 
   @Input() countries!: string[];
   @Input() sumOfAllMedalsYears!: number[];
