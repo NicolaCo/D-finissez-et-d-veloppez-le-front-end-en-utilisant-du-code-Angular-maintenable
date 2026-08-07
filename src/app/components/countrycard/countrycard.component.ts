@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import Chart from 'chart.js/auto';
 
 
@@ -9,19 +9,12 @@ import Chart from 'chart.js/auto';
   templateUrl: './countrycard.component.html',
   styleUrl: './countrycard.component.scss'
 })
-export class CountrycardComponent implements OnInit, OnChanges{
+export class CountrycardComponent implements OnChanges{
 
   @Input() years: number[] = [];
   @Input() medals: number[] = [];
 
   public lineChart!: Chart<'line', number[], number>;
-  
-
-  constructor() { }
-
-  ngOnInit() {
-    this.buildChart(this.years, this.medals);
-  }
 
   ngOnChanges(changes: SimpleChanges){
     if(changes['years'] || changes ['medals']){
