@@ -1,12 +1,13 @@
-<app-header  [titlePage]="titlePage" [items]="indicators"></app-header>
-
-@if (error) {
-  <p class="error">An error occurred: {{ error }}</p>
-}
-
-<div>
-  <app-medal-chart-component 
-    [countries]="countries"
-    [sumOfAllMedalsYears]="sumOfAllMedalsYears">
-  </app-medal-chart-component>
+<div class="grid">
+  <div class="span-all">
+    <app-header [titlePage]="titlePage" [items]="indicators"></app-header>
+    @if (error) {
+      <p class="error">An error occurred: {{ error }}</p>
+    }
+  </div>
+  <div class="span-all">
+    <app-medal-chart-component
+      [olympics]="datas">
+    </app-medal-chart-component>
+  </div>
 </div>

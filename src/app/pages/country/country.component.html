@@ -1,12 +1,14 @@
-<div>
-<app-header  [titlePage]="countryName" [items]="indicators"></app-header>
-@if (error) {
-  <p class="error">An error occurred: {{ error }}</p>
-}
-<div>
-  <app-countrycard [years]="this.years" [medals]="this.medals" ></app-countrycard>
-</div>
-  <div class="center">
-  <a routerLink="/">Go back</a>
-</div>
+<div class="grid">
+  <div class="span-all">
+    <app-header [titlePage]="countryName" [items]="indicators"></app-header>
+    @if (error) {
+      <p class="error">An error occurred: {{ error }}</p>
+    }
+  </div>
+  <div class="chart-panel">
+    <app-countrycard [years]="years" [medals]="medals"></app-countrycard>
+  </div>
+  <div class="side-card side-panel">
+    <a routerLink="/">Go back</a>
+  </div>
 </div>

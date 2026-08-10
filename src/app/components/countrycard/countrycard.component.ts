@@ -37,10 +37,14 @@ export class CountrycardComponent implements OnChanges{
           ]
         },
         options: {
-          aspectRatio: 2.5
+          aspectRatio: this.getLineAspectRatio()
         }
       });
       this.lineChart = lineChart;
+  }
+
+  private getLineAspectRatio(): number {
+    return typeof window !== 'undefined' && window.innerWidth < 768 ? 1.5 : 2.5;
   }
   
 }
