@@ -12,11 +12,6 @@ export type LoadOlympicsByIdResult =
   | { kind: 'not-found' }
   | { kind: 'error'; status: number; message: string };
 
-export type CountryNameIdResult =
-  | { kind: 'success'; name: string; id: number }
-  | { kind: 'not-found' }
-  | { kind: 'error'; status: number; message: string };
-
 @Injectable({
   providedIn: 'root'
 })
