@@ -1,7 +1,10 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
-import { DataService } from 'src/app/services/data.service';
+import { Olympic, Participation } from 'src/app/models/olympic.model';
+
+
+export type Ingredients = { countryId: number, countryName: string, sumOfAllMedalsYears: number };
 
 
 @Component({
@@ -13,64 +16,76 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class MedalChartComponent implements OnChanges {
 
-  @Input() countries!: string[];
-  @Input() sumOfAllMedalsYears!: number[];
+  @Input() olympics!: Olympic[];
+
+  public sumOfAllMedalsYearsByCountry!: Ingredients[];
 
   public pieChart!: Chart<'pie', number[], string>;
   public error!: string;
 
-  constructor(private router: Router, private dataService: DataService) { }
-  
 
-  ngOnChanges(): void{
-    if(this.countries?.length && this.sumOfAllMedalsYears?.length) {
-      this.buildPieChart(this.countries, this.sumOfAllMedalsYears);
+  constructor(private router: Router) { }
+
+
+  ngOnChanges(): void {
+    if (this.olympics?.length) {
+      this.extractSumOfAllMedalsYears();
+    }
+    if (this.sumOfAllMedalsYearsByCountry?.length) {
+      this.buildPieChart(this.sumOfAllMedalsYearsByCountry);
     }
   }
-  
-  buildPieChart(countries: string[], sumOfAllMedalsYears: number[]) {
-    if(this.pieChart) {
-      this.pieChart.data.labels = countries;
-      this.pieChart.data.datasets[0].data = sumOfAllMedalsYears;
+
+
+  extractSumOfAllMedalsYears() {
+    this.sumOfAllMedalsYearsByCountry = [];
+    this.olympics.forEach((olympic: Olympic) => {
+      this.sumOfAllMedalsYearsByCountry.push({
+        countryId: olympic.id,
+        countryName: olympic.country,
+        sumOfAllMedalsYears: olympic.participations.reduce(
+          (acc: number, participation: Participation) => acc + participation.medalsCount, 0)
+      });
+    });
+  }
+
+  buildPieChart(sumOfAllMedalsYearsByCountry: Ingredients[]) {
+    if (this.pieChart) {
+      this.pieChart.data.labels = sumOfAllMedalsYearsByCountry.map(country => country.countryName);
+      this.pieChart.data.datasets[0].data = sumOfAllMedalsYearsByCountry.map(country => country.sumOfAllMedalsYears);
       this.pieChart.update();
       return;
     }
-    
+
     this.pieChart = new Chart('DashboardPieChart', {
       type: 'pie',
       data: {
-        labels: countries,
+        labels: sumOfAllMedalsYearsByCountry.map(row => row.countryName),
         datasets: [{
           label: 'Medals',
-          data: sumOfAllMedalsYears,
+          data: sumOfAllMedalsYearsByCountry.map(row => row.sumOfAllMedalsYears),
           backgroundColor: ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', 'orange', '#94819d'],
           hoverOffset: 4
         }],
       },
       options: {
-        aspectRatio: 2.5,
+        aspectRatio: this.getPieAspectRatio(),
         onClick: (e) => {
           if (e.native) {
             const points = this.pieChart.getElementsAtEventForMode(e.native, 'point', { intersect: true }, true)
             if (points.length) {
               const firstPoint = points[0];
-              const countryName = this.pieChart.data.labels ? this.pieChart.data.labels[firstPoint.index] : '';
-              this.dataService.getCountryIdFromName(countryName).subscribe(data => {
-                if(data.kind === 'success') {
-                  this.router.navigate(['country', data.id]);
-                  return;
-                } else if (data.kind === 'not-found') {
-                  this.router.navigate(['not-found']);
-                  return;
-                } else {
-                  this.error = data.message;
-                  return;
-                }
-              });
+              const countryIds = sumOfAllMedalsYearsByCountry.map(row => row.countryId);
+              this.router.navigate(['country', countryIds[firstPoint.index]]);
             }
           }
         }
       }
     });
   }
+
+  private getPieAspectRatio(): number {
+    return typeof window !== 'undefined' && window.innerWidth < 768 ? 1.2 : 2.5;
+  }
+
 }

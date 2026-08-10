@@ -51,33 +51,4 @@ export class DataService {
       })
     );
   }
-
-  getCountryNameFromId(countryId: number): Observable<CountryNameIdResult> {
-    return this.loadOlympics().pipe(
-      map((result) => {
-        if (result.kind === 'error') {
-          return { kind: 'error', status: result.status, message: result.message };
-        }
-        const olympic = result.data.find((o: Olympic) => o.id === countryId);
-        return olympic
-          ? { kind: 'success', name: olympic.country, id:olympic.id }
-          : { kind: 'not-found' };
-      })
-    );
-  }
-
-    getCountryIdFromName(countryName: string): Observable<CountryNameIdResult> {
-    return this.loadOlympics().pipe(
-      map((result) => {
-        if (result.kind === 'error') {
-          return { kind: 'error', status: result.status, message: result.message };
-        }
-        const olympic = result.data.find((o: Olympic) => o.country === countryName);
-        return olympic
-          ? { kind: 'success', name: olympic.country, id:olympic.id }
-          : { kind: 'not-found' };
-      })
-    );
-  }
-
 }

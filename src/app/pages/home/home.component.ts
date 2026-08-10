@@ -22,21 +22,13 @@ export class HomeComponent implements OnInit {
   
   public datas!: Olympic[];
 
-  public countries: string[] = [];
-
-  public sumOfAllMedalsYears: number[] = [];
-
-  
-
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void{
     this.dataService.loadOlympics().subscribe(result => {
       if (result.kind === 'success') {
         this.datas = result.data;
-        this.countries = this.extractCountries();
-        this.sumOfAllMedalsYears = this.extractSumOfAllMedalsYears();
-        this.indicators.push({ label :'Number of countries', value: this.countries.length});
+        this.indicators.push({ label :'Number of countries', value: this.countCountries()});
         this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
       } else {
         this.error = result.message;
@@ -49,15 +41,10 @@ export class HomeComponent implements OnInit {
     return new Set(years).size;
   }
 
-  extractCountries(): string[] {
-    return this.datas.map((i: Olympic) => i.country);
+  countCountries(): number {
+    return this.datas.length;
   }
-
-  extractSumOfAllMedalsYears() {
-    return this.datas.map((olympic: Olympic) => olympic.participations
-      .map((participation: Participation) => (participation.medalsCount)))
-      .map((i: number[]) => i.reduce((acc: number, j: number) => acc + j, 0));
-  }
+ 
 
 }
 

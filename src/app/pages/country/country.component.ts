@@ -38,13 +38,9 @@ export class CountryComponent implements OnInit {
     this.dataService.loadOlympicsById(this.countryId).subscribe(
       result => {
         if(result.kind === 'success') {
-          this.countryParticipations = result.data.participations
-          this.dataService.getCountryNameFromId(this.countryId).subscribe(
-            countryNameId => {
-              if(countryNameId.kind === 'success'){
-                this.countryName = countryNameId.name;
-              }
-            });
+          const data = result.data
+          this.countryParticipations = data.participations
+          this.countryName = data.country
           this.years = this.selectYears()
           this.medals = this.selectMedals()
           this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries()})
@@ -59,7 +55,7 @@ export class CountryComponent implements OnInit {
   }
 
   readCountryIdFromParam(): void{
-    let countryId: number = 0;
+    let countryId: number = -1;
     this.route.paramMap.subscribe((param: ParamMap) => countryId = Number(param.get('id')));
     if ( Number.isNaN(countryId) ) {
       this.router.navigate(['/not-found']);
@@ -69,7 +65,7 @@ export class CountryComponent implements OnInit {
   }
 
   selectYears(): number[]{
-    return this.countryParticipations.map((i: Participation) => i.year) ?? [];
+    return this.countryParticipations.map((i: Participation) => i.year);
   }
 
   selectMedals(): number[]{
