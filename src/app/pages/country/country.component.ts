@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { CountrycardComponent } from 'src/app/components/countrycard/countrycard.component';
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
 import { Participation } from 'src/app/models/olympic.model';
@@ -54,9 +54,8 @@ export class CountryComponent implements OnInit {
       });
   }
 
-  readCountryIdFromParam(): void{
-    let countryId: number = -1;
-    this.route.paramMap.subscribe((param: ParamMap) => countryId = Number(param.get('id')));
+  private readCountryIdFromParam(): void{
+    const countryId: number = Number(this.route.snapshot.params['id']);
     if ( Number.isNaN(countryId) ) {
       this.router.navigate(['/not-found']);
       return;
@@ -64,23 +63,23 @@ export class CountryComponent implements OnInit {
     this.countryId = countryId ;
   }
 
-  selectYears(): number[]{
+  private selectYears(): number[]{
     return this.countryParticipations.map((i: Participation) => i.year);
   }
 
-  selectMedals(): number[]{
+  private selectMedals(): number[]{
     return this.countryParticipations.map((i: Participation) => i.medalsCount);
   }
 
-  calculateNumberOfEntries(): number{
+  private calculateNumberOfEntries(): number{
     return this.countryParticipations.length;
   }
 
-  calculateTotalNumberOfMedals(): number {
+  private calculateTotalNumberOfMedals(): number {
     return this.countryParticipations.reduce((acc: number, i: Participation) => acc + i.medalsCount, 0 );
   }
 
-  calculateTotalNumberOfAthletes(): number {
+  private calculateTotalNumberOfAthletes(): number {
     return this.countryParticipations.reduce((acc: number, i:Participation) => acc + i.athleteCount, 0);
   }
 
