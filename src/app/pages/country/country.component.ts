@@ -47,7 +47,7 @@ export class CountryComponent implements OnInit {
           this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals()})
           this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes()})
         } else if (result.kind === 'not-found') {
-          this.router.navigate(['/not-found']);
+          this.router.navigate(['/country-not-found']);
         } else {
           this.error = result.message
         }

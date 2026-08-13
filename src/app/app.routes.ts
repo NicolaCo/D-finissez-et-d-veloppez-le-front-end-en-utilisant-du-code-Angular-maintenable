@@ -13,9 +13,16 @@ export const routes: Routes = [
     path : 'country/:id',
     component : CountryComponent
   },
-
   {
-    path : 'not-found',
+    path : 'country-not-found',
+    component : NotFoundComponent
+  },
+  {
+    path : 'bad-url',
+    component : NotFoundComponent
+  },
+  {
+    path : 'missing-data',
     component : NotFoundComponent
   },
   {
