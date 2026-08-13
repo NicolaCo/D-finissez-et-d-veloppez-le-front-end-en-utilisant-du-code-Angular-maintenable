@@ -33,6 +33,8 @@ export class NotFoundComponent implements OnInit{
         return 'Country not found !';
       case "missing-data":
         return 'Data not found !';
+      case "service-unavaible":
+        return 'Service unavailable. Please try again later.';
       default:
         return 'This page doesn\'t exists !';
     }

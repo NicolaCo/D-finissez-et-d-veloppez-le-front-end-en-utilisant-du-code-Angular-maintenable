@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   
   public datas!: Olympic[];
 
-  constructor( private router: Router, private dataService: DataService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void{
     this.dataService.loadOlympics().subscribe(result => {
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         this.indicators.push({ label :'Number of countries', value: this.countCountries()});
         this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
       } else {
-        this.router.navigate(['/missing-data']);
+        this.error = 'Service unavailable. Please try again later.';
       }
     });
   }

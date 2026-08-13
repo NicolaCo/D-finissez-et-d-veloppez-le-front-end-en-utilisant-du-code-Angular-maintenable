@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { CountrycardComponent } from 'src/app/components/countrycard/countrycard.component';
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
-import { Participation } from 'src/app/models/olympic.model';
+import { Olympic, Participation } from 'src/app/models/olympic.model';
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -19,8 +19,6 @@ export class CountryComponent implements OnInit {
   public countryName: string = '';
   public countryId: number = -1;
 
-  public error: string | null = null;
-
   public indicators: Indicator[] = [];
 
   public countryParticipations: Participation[] = [];
@@ -35,17 +33,21 @@ export class CountryComponent implements OnInit {
       result => {
         if(result.kind === 'success') {
           const data = result.data
-          this.countryParticipations = data.participations
-          this.countryName = data.country
-          this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries()})
-          this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals()})
-          this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes()})
+          this.extractDatas(data);
         } else if (result.kind === 'not-found') {
           this.router.navigate(['/country-not-found']);
         } else {
-          this.error = result.message
+          this.router.navigate(['/service-unavaible']);
         }
       });
+  }
+
+  private extractDatas(data: Olympic) {
+    this.countryParticipations = data.participations;
+    this.countryName = data.country;
+    this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries() });
+    this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals() });
+    this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes() });
   }
 
   private readCountryIdFromParam(): void{

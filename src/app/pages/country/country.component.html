@@ -1,9 +1,6 @@
 <div class="grid">
   <div class="span-all">
     <app-header [titlePage]="countryName" [items]="indicators"></app-header>
-    @if (error) {
-      <p class="error">An error occurred: {{ error }}</p>
-    }
   </div>
   <div class="chart-panel">
     <app-countrycard [participations]="countryParticipations"></app-countrycard>

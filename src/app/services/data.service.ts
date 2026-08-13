@@ -5,6 +5,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 
 export type LoadOlympicsResult =
   | { kind: 'success'; data: Olympic[] }
+  | { kind: 'not-found'; }
   | { kind: 'error'; status: number; message: string };
 
 export type LoadOlympicsByIdResult =
@@ -26,7 +27,11 @@ export class DataService {
   
   loadOlympics(): Observable<LoadOlympicsResult> {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
-      map((data: Olympic[]) => ({ kind: 'success' as const, data })),
+      map((data: Olympic[]) => (
+        data.length > 0 ?
+        { kind: 'success' as const, data }
+        : { kind: 'not-found' as const}
+      )),
       catchError((err: HttpErrorResponse) =>
         of({ kind: 'error' as const, status: err.status, message: err.message })
       )
@@ -38,6 +43,9 @@ export class DataService {
       map((result) => {
         if (result.kind === 'error') {
           return { kind: 'error', status: result.status, message: result.message };
+        }
+        if(result.kind === 'not-found'){
+          return { kind: 'not-found' }
         }
         const olympic = result.data.find((o: Olympic) => o.id === id);
         return olympic
