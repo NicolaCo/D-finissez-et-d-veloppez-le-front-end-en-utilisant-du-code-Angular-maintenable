@@ -25,10 +25,6 @@ export class CountryComponent implements OnInit {
 
   public countryParticipations: Participation[] = [];
 
-  public years: number[] = [];
-
-  public medals: number[] = [];
-
 
   constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {
   }
@@ -41,8 +37,6 @@ export class CountryComponent implements OnInit {
           const data = result.data
           this.countryParticipations = data.participations
           this.countryName = data.country
-          this.years = this.selectYears()
-          this.medals = this.selectMedals()
           this.indicators.push({ label: 'Number of entries', value: this.calculateNumberOfEntries()})
           this.indicators.push({ label: 'Total number medals', value: this.calculateTotalNumberOfMedals()})
           this.indicators.push({ label: 'Total number of athletes', value: this.calculateTotalNumberOfAthletes()})
@@ -61,14 +55,6 @@ export class CountryComponent implements OnInit {
       return;
     }
     this.countryId = countryId ;
-  }
-
-  private selectYears(): number[]{
-    return this.countryParticipations.map((i: Participation) => i.year);
-  }
-
-  private selectMedals(): number[]{
-    return this.countryParticipations.map((i: Participation) => i.medalsCount);
   }
 
   private calculateNumberOfEntries(): number{
