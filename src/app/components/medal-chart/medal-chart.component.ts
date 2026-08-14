@@ -29,6 +29,7 @@ export class MedalChartComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (this.olympics?.length) {
+      this.olympics = reoderOlympicsByName(this.olympics);
       this.extractSumOfAllMedalsYears();
     }
     if (this.sumOfAllMedalsYearsByCountry?.length) {
@@ -89,3 +90,7 @@ export class MedalChartComponent implements OnChanges {
   }
 
 }
+function reoderOlympicsByName(olympics: Olympic[]): Olympic[] {
+  return olympics.sort((a, b ) => String(a.country).localeCompare(b.country));
+}
+
