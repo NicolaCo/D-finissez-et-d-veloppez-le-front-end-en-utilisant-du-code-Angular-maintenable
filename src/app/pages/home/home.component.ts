@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
         this.datas = result.data;
         this.indicators.push({ label :'Number of countries', value: this.countCountries()});
         this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
-      } if(result.kind === 'not-found') {
+      } else if(result.kind === 'not-found') {
         this.error = 'Missing data. Please try again later.';
       } else {
         this.error = 'Service unavailable. Please try again later.';
