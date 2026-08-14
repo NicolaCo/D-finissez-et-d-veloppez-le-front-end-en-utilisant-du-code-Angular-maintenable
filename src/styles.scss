@@ -25,6 +25,19 @@
     }
 }
 
+.btn {
+    background: #0b868f;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background: #086b72;
+    }
+}
+
 .split {
     display: flex;
     flex-direction: row;
