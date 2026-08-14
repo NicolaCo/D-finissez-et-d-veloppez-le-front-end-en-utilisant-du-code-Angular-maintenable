@@ -16,6 +16,8 @@ export class CountrycardComponent implements OnChanges{
 
   public lineChart!: Chart<'bar', number[]>;
 
+  public chartDescription: string = '';
+
   ngOnChanges(changes: SimpleChanges){
     if(changes['participations']){
       this.lineChart?.destroy();
@@ -24,6 +26,7 @@ export class CountrycardComponent implements OnChanges{
   }
 
   buildChart(participations: Participation[]) {
+      this.chartDescription = this.createDescription(participations);
       const lineChart = new Chart('countryChart', {
         type: 'bar',
         data: {
@@ -60,6 +63,13 @@ export class CountrycardComponent implements OnChanges{
         }
       });
       this.lineChart = lineChart;
+  }
+
+  private createDescription(participations: Participation[]) {
+    return 'Medals per year. ' +
+      participations
+        .map((participation) => `${participation.year}: ${participation.medalsCount} medals (${participation.medalsDetails.gold} gold, ${participation.medalsDetails.silver} silver, ${participation.medalsDetails.bronze} bronze)`)
+        .join(', ') + '.';
   }
 
   private selectYears(participations: Participation[]): number[]{

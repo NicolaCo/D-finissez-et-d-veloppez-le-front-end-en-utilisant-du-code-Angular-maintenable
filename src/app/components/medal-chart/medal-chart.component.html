@@ -2,5 +2,6 @@
   <p class="error">An error occurred: {{ error }}</p>
 }
 <div class="chart-container">
-  <canvas id="DashboardPieChart"></canvas>
+  <canvas id="DashboardPieChart" aria-describedby="pieChartDescription"></canvas>
+  <p class="sr-only" id="pieChartDescription">{{ chartDescription }}</p>
 </div>

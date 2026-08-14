@@ -21,8 +21,10 @@ export class MedalChartComponent implements OnChanges {
   public sumOfAllMedalsYearsByCountry!: Ingredients[];
 
   public pieChart!: Chart<'pie', number[], string>;
+
   public error!: string;
 
+  public chartDescription: string = '';
 
   constructor(private router: Router) { }
 
@@ -48,6 +50,7 @@ export class MedalChartComponent implements OnChanges {
           (acc: number, participation: Participation) => acc + participation.medalsCount, 0)
       });
     });
+    this.chartDescription = this.createDescription();
   }
 
   buildPieChart(sumOfAllMedalsYearsByCountry: Ingredients[]) {
@@ -66,6 +69,8 @@ export class MedalChartComponent implements OnChanges {
           label: 'Medals',
           data: sumOfAllMedalsYearsByCountry.map(row => row.sumOfAllMedalsYears),
           backgroundColor: ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', 'orange', '#94819d'],
+          borderColor: '#ffffff',
+          borderWidth: 2,
           hoverOffset: 4
         }],
       },
@@ -85,12 +90,19 @@ export class MedalChartComponent implements OnChanges {
     });
   }
 
+  private createDescription() {
+    return 'Total medals won per country. ' +
+      this.sumOfAllMedalsYearsByCountry
+        .map((country) => `${country.countryName}: ${country.sumOfAllMedalsYears}`)
+        .join(', ') + '.';
+  }
+
   private getPieAspectRatio(): number {
     return typeof window !== 'undefined' && window.innerWidth < 768 ? 1.2 : 2.5;
   }
 
 }
 function reoderOlympicsByName(olympics: Olympic[]): Olympic[] {
-  return olympics.sort((a, b ) => String(a.country).localeCompare(b.country));
+  return olympics.sort((a, b) => String(a.country).localeCompare(b.country));
 }
 
