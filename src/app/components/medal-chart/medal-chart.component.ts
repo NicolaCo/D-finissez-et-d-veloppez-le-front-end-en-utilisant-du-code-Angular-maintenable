@@ -22,8 +22,6 @@ export class MedalChartComponent implements OnChanges {
 
   public pieChart!: Chart<'pie', number[], string>;
 
-  public error!: string;
-
   public chartDescription: string = '';
 
   constructor(private router: Router) { }

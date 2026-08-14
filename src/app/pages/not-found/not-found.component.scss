@@ -1,8 +1,15 @@
+:host {
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
 .center {
   width: 100%;
   min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column
 }

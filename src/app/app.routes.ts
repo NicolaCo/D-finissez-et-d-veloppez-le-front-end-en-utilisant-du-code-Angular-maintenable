@@ -18,10 +18,6 @@ export const routes: Routes = [
     component : NotFoundComponent
   },
   {
-    path : 'bad-url',
-    component : NotFoundComponent
-  },
-  {
     path : 'missing-data',
     component : NotFoundComponent
   },

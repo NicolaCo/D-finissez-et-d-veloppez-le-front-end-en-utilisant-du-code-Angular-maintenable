@@ -8,8 +8,7 @@ export interface Indicator {
 @Component({
   selector: 'app-header',
   standalone: true,
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header.component.html'
 })
 
 
