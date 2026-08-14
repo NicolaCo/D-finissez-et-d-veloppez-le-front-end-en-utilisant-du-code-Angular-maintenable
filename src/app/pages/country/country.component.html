@@ -2,10 +2,14 @@
   <div class="span-all">
     <app-header [titlePage]="countryName" [items]="indicators"></app-header>
   </div>
-  <div class="chart-panel">
-    <app-countrycard [participations]="countryParticipations"></app-countrycard>
-  </div>
-  <div class="side-card side-panel">
-    <a routerLink="/">Back</a>
-  </div>
+  @if (isLoading) {
+    <app-spinner></app-spinner>
+  } @else {
+    <div class="chart-panel">
+      <app-countrycard [participations]="countryParticipations"></app-countrycard>
+    </div>
+    <div class="side-card side-panel">
+      <a routerLink="/">Back</a>
+    </div>
+  }
 </div>

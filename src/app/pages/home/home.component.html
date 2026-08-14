@@ -6,8 +6,12 @@
     }
   </div>
   <div class="span-all">
-    <app-medal-chart-component
-      [olympics]="datas">
-    </app-medal-chart-component>
+    @if (isLoading) {
+      <app-spinner></app-spinner>
+    } @else {
+      <app-medal-chart-component
+        [olympics]="datas">
+      </app-medal-chart-component>
+    }
   </div>
 </div>

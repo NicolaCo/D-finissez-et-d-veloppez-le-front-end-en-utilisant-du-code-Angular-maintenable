@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent, Indicator } from '../../components/header/header.component';
 import { MedalChartComponent } from '../../components/medal-chart/medal-chart.component';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { DataService } from 'src/app/services/data.service';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, MedalChartComponent],
+  imports: [HeaderComponent, MedalChartComponent, SpinnerComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -17,6 +18,8 @@ export class HomeComponent implements OnInit {
   public titlePage: string = 'Medals per Country';
 
   public error: string | null = null;
+
+  public isLoading: boolean = true;
 
   public indicators: Indicator[] = [];
   
@@ -35,6 +38,7 @@ export class HomeComponent implements OnInit {
       } else {
         this.error = 'Service unavailable. Please try again later.';
       }
+      this.isLoading = false;
     });
   }
 

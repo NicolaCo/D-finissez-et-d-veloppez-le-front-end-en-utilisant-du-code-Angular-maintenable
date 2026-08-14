@@ -5,6 +5,14 @@
     padding: 16px;
 }
 
+app-spinner {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
 .side-card {
     display: flex;
     justify-content: center;

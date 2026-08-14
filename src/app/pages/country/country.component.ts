@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { CountrycardComponent } from 'src/app/components/countrycard/countrycard.component';
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
+import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
 import { DataService } from 'src/app/services/data.service';
 
@@ -9,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-country',
   standalone: true,
-  imports: [HeaderComponent, CountrycardComponent, RouterLink],
+  imports: [HeaderComponent, CountrycardComponent, RouterLink, SpinnerComponent],
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss']
 })
@@ -23,6 +24,7 @@ export class CountryComponent implements OnInit {
 
   public countryParticipations: Participation[] = [];
 
+  public isLoading: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {
   }
@@ -34,6 +36,7 @@ export class CountryComponent implements OnInit {
         if(result.kind === 'success') {
           const data = result.data
           this.extractDatas(data);
+          this.isLoading = false;
         } else if (result.kind === 'not-found') {
           this.router.navigate(['/country-not-found']);
         } else {
