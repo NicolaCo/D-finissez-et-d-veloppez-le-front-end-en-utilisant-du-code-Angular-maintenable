@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { HeaderComponent, Indicator } from '../../components/header/header.component';
 import { MedalChartComponent } from '../../components/medal-chart/medal-chart.component';
 import { DataService } from 'src/app/services/data.service';
@@ -31,6 +30,8 @@ export class HomeComponent implements OnInit {
         this.datas = result.data;
         this.indicators.push({ label :'Number of countries', value: this.countCountries()});
         this.indicators.push({ label:'Number of JOs', value: this.calculateTotalJOs() });
+      } if(result.kind === 'not-found') {
+        this.error = 'Missing data. Please try again later.';
       } else {
         this.error = 'Service unavailable. Please try again later.';
       }
@@ -45,7 +46,6 @@ export class HomeComponent implements OnInit {
   countCountries(): number {
     return this.datas.length;
   }
- 
 
 }
 
