@@ -9,11 +9,11 @@ export interface Participation {
   year: number,
   city: string,
   medalsCount: number,
-  medalsDetails: medalsDetails,
+  medalsDetails: MedalsDetails,
   athleteCount: number,
 }
 
-export interface medalsDetails {
+export interface MedalsDetails {
   gold: number,
   silver: number,
   bronze: number
