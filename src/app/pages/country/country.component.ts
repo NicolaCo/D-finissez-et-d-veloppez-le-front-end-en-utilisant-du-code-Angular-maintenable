@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { CountrycardComponent } from 'src/app/components/countrycard/countrycard.component';
 import { HeaderComponent, Indicator } from 'src/app/components/header/header.component';
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
 import { DataService } from 'src/app/services/data.service';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-country',
@@ -15,7 +15,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./country.component.scss']
 })
 
-export class CountryComponent implements OnInit {
+export class CountryComponent {
 
   public countryName: string = '';
   public countryId: number = -1;
@@ -27,11 +27,8 @@ export class CountryComponent implements OnInit {
   public isLoading: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {
-  }
-
-  ngOnInit(): void {
     this.readCountryIdFromParam();
-    this.dataService.loadOlympicsById(this.countryId).subscribe(
+    this.dataService.loadOlympicsById(this.countryId).pipe(takeUntilDestroyed()).subscribe(
       result => {
         if(result.kind === 'success') {
           const data = result.data

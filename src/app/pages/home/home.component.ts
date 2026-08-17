@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeaderComponent, Indicator } from '../../components/header/header.component';
 import { MedalChartComponent } from '../../components/medal-chart/medal-chart.component';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { DataService } from 'src/app/services/data.service';
 import { Olympic, Participation } from 'src/app/models/olympic.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import { Olympic, Participation } from 'src/app/models/olympic.model';
   styleUrls: ['./home.component.scss'],
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   public titlePage: string = 'Medals per Country';
 
@@ -25,10 +26,8 @@ export class HomeComponent implements OnInit {
   
   public datas!: Olympic[];
 
-  constructor(private dataService: DataService) {}
-
-  ngOnInit(): void{
-    this.dataService.loadOlympics().subscribe(result => {
+  constructor(private dataService: DataService) {
+    this.dataService.loadOlympics().pipe(takeUntilDestroyed()).subscribe(result => {
       if (result.kind === 'success') {
         this.datas = result.data;
         this.indicators.push({ label :'Number of countries', value: this.countCountries()});
@@ -52,4 +51,3 @@ export class HomeComponent implements OnInit {
   }
 
 }
-
