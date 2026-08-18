@@ -1,19 +1,21 @@
+:host {
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+}
 
-.wrapper-container {
+app-spinner {
+    grid-column: 1 / -1;
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 400px;
 }
 
-.container {
-    width: 50%;
-    h2{
-        text-align: center;
-        color: gray;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .container {
-        width: 100%;
-    }
+.side-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
 }

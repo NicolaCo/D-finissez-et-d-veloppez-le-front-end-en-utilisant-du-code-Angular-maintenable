@@ -1,0 +1,13 @@
+<h2>Olympic games app</h2>
+<hr/>
+<div class="center">
+    <div>{{ titlePage }}</div>
+</div>
+<div class="split">
+  @for (it of items; track it.label) {
+    <div class="card">
+      <p class="label">{{ it.label }}</p>
+      <p class="value">{{ it.value }}</p>
+    </div>
+  }
+</div>

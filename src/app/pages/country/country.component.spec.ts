@@ -1,7 +1,9 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 
-
-import { CountryComponent } from "./country.component";
+import { CountryComponent } from './country.component';
 
 describe('DetailComponent', () => {
   let component: CountryComponent;
@@ -9,7 +11,12 @@ describe('DetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CountryComponent ]
+      imports: [ CountryComponent ],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        { provide: ActivatedRoute, useValue: { paramMap: of(new Map()) } }
+      ]
     })
     .compileComponents();
 

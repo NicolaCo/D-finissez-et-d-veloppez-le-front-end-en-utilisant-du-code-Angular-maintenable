@@ -2,20 +2,20 @@ import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { HomeComponent } from './home.component';
+import { MedalChartComponent } from './medal-chart.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('MedalChartComponentComponent', () => {
+  let component: MedalChartComponent;
+  let fixture: ComponentFixture<MedalChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HomeComponent ],
+      imports: [MedalChartComponent],
       providers: [ provideRouter([]), provideHttpClient() ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(MedalChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

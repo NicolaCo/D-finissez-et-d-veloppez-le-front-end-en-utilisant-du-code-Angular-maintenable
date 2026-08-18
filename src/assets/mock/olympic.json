@@ -8,6 +8,11 @@
         "year": 2012,
         "city": "Londres",
         "medalsCount": 28,
+        "medalsDetails": {
+          "gold" : 8,
+          "silver" : 9,
+          "bronze" : 11 
+        },
         "athleteCount": 372
       },
       {
@@ -15,6 +20,11 @@
         "year": 2016,
         "city": "Rio de Janeiro",
         "medalsCount": 28,
+        "medalsDetails": {
+          "gold" : 8,
+          "silver" : 12,
+          "bronze" : 8 
+        },
         "athleteCount": 375
       },
       {
@@ -22,6 +32,11 @@
         "year": 2020,
         "city": "Tokyo",
         "medalsCount": 40,
+        "medalsDetails": {
+          "gold" : 10,
+          "silver" : 10,
+          "bronze" : 20 
+        },
         "athleteCount": 381
       }
     ]
@@ -35,6 +50,11 @@
         "year": 2012,
         "city": "Londres",
         "medalsCount": 20,
+        "medalsDetails": {
+          "gold" : 4,
+          "silver" : 10,
+          "bronze" : 6 
+        },
         "athleteCount": 315
       },
       {
@@ -42,6 +62,11 @@
         "year": 2016,
         "city": "Rio de Janeiro",
         "medalsCount": 17,
+        "medalsDetails": {
+          "gold" : 7,
+          "silver" : 4,
+          "bronze" : 6 
+        },
         "athleteCount": 312
       },
       {
@@ -49,6 +74,11 @@
         "year": 2020,
         "city": "Tokyo",
         "medalsCount": 17,
+        "medalsDetails": {
+          "gold" : 3,
+          "silver" : 8,
+          "bronze" : 6 
+        },
         "athleteCount": 321
       }
     ]
@@ -61,14 +91,24 @@
         "id": 1,
         "year": 2012,
         "city": "Londres",
-        "medalsCount": 109,
+        "medalsCount": 105,
+        "medalsDetails": {
+          "gold" : 48,
+          "silver" : 26,
+          "bronze" : 31 
+        },
         "athleteCount": 610
       },
       {
         "id": 2,
         "year": 2016,
         "city": "Rio de Janeiro",
-        "medalsCount": 123,
+        "medalsCount": 121,
+        "medalsDetails": {
+          "gold" : 46,
+          "silver" : 37,
+          "bronze" : 38 
+        },
         "athleteCount": 652
       },
       {
@@ -76,6 +116,11 @@
         "year": 2020,
         "city": "Tokyo",
         "medalsCount": 113,
+        "medalsDetails": {
+          "gold" : 39,
+          "silver" : 41,
+          "bronze" : 33 
+        },
         "athleteCount": 626
       }
     ]
@@ -89,13 +134,23 @@
         "year": 2012,
         "city": "Londres",
         "medalsCount": 44,
+        "medalsDetails": {
+          "gold" : 11,
+          "silver" : 20,
+          "bronze" : 13 
+        },
         "athleteCount": 425
       },
       {
         "id": 2,
         "year": 2016,
         "city": "Rio de Janeiro",
-        "medalsCount": 44,
+        "medalsCount": 42,
+        "medalsDetails": {
+          "gold" : 17,
+          "silver" : 10,
+          "bronze" : 15 
+        },
         "athleteCount": 422
       },
       {
@@ -103,6 +158,11 @@
         "year": 2020,
         "city": "Tokyo",
         "medalsCount": 37,
+        "medalsDetails": {
+          "gold" : 10,
+          "silver" : 11,
+          "bronze" : 16 
+        },
         "athleteCount": 425
       }
     ]
@@ -116,13 +176,23 @@
         "year": 2012,
         "city": "Londres",
         "medalsCount": 35,
+        "medalsDetails": {
+          "gold" : 11,
+          "silver" : 11,
+          "bronze" : 13 
+        },
         "athleteCount": 423
       },
       {
         "id": 2,
         "year": 2016,
         "city": "Rio de Janeiro",
-        "medalsCount": 45,
+        "medalsCount": 42,
+        "medalsDetails": {
+          "gold" : 10,
+          "silver" : 18,
+          "bronze" : 14 
+        },
         "athleteCount": 412
       },
       {
@@ -130,6 +200,11 @@
         "year": 2020,
         "city": "Tokyo",
         "medalsCount": 33,
+        "medalsDetails": {
+          "gold" : 10,
+          "silver" : 12,
+          "bronze" : 11 
+        },
         "athleteCount": 403
       }
     ]

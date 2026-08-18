@@ -1,20 +1,17 @@
-<h2>Olympic games app</h2>
-<hr/>
-<div>
-  <div>
-    <div class="center">
-      <div>{{ titlePage }}</div>
-    </div>
-    <div class="split">
-      <div>
-        <p>Number of countries</p>
-        <p>{{ totalCountries }}</p>
-      </div>
-      <div>
-        <p>Number of JOs</p>
-        <p>{{ totalJOs }}</p>
-      </div>
-    </div>
+<div class="grid">
+  <div class="span-all">
+    <app-header [titlePage]="titlePage" [items]="indicators"></app-header>
+    @if (error) {
+      <p class="error">An error occurred: {{ error }}</p>
+    }
   </div>
-  <canvas id="DashboardPieChart">{{ pieChart }}</canvas>
+  <div class="span-all">
+    @if (isLoading) {
+      <app-spinner></app-spinner>
+    } @else {
+      <app-medal-chart-component
+        [olympics]="datas">
+      </app-medal-chart-component>
+    }
+  </div>
 </div>
